@@ -1,0 +1,26 @@
+weight = 5
+shipping = "Drone"
+
+if shipping == "Ground":
+  flat = 20
+  if weight <= 2:
+    price = 1.5
+  elif weight >= 2 and weight <= 6:
+    price = 3
+  elif weight >= 6 and weight <= 10:
+    price = 4
+  else:
+    price =4.75
+elif shipping == "Drone":
+  flat = 0
+  if weight <= 2:
+    price = 4.5
+  elif weight >= 2 and weight <= 6:
+    price = 9
+  elif weight >= 6 and weight <= 10:
+    price = 12
+  else:
+    price = 14.25
+
+total_cost = price * weight + flat
+print(total_cost)
