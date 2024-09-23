@@ -1,0 +1,62 @@
+#Plot the daily sales for the first 50 weeks
+
+#Import
+import pandas as pd
+import matplotlib.pyplot as plt
+import glob
+
+#Combines the data
+23data = glob.glob('sales_week_starting*.csv')
+
+#Concates data
+df=[]
+for x in 23data:
+  df.append(pd.read_csv(x))
+
+print(len(df_list))
+print(df_list.head())
+
+#change the data in column to a DateTime
+sale_day = pd.to_datetime(df['sale_time'])
+
+#Puts them in order
+daily_sales_df = sale_day.groupby(sale_day.dt.floor('d')).size().reset_index(name='sales_amount')
+#rename a column
+daily_sales_df.rename(columns={'sale_time':'sale_day'},inplace=True)
+daily_sales_df.head()
+
+#Find the max
+print(daily_sales_df.sales_amount.max())
+
+
+#Plots the data as a line graph
+plt.plot(daily_sales_df.sale_time,daily_sales_df.sales_amount)
+plt.xlabel('Sales Time")
+plt.xlabel('Sales Amount")
+plt.title(First 50 Weeks of Sales')
+plt.axis([2012-10-1, 2012-13-1, 0, 900])
+plt.show()
+
+#Find the date where the sudden change occured
+#Only values over 600
+highsalesA = (daily_sales_df.sales_amount > 600)
+#Groups all values over 600 by date
+highsalesB = highsalesA.sale_date.groupby(sale_day.dt.floor('d')).size().reset_index(name='sales_amount')  
+print(highsalesB.head())
+
+#Find the p-value
+#import
+from scipy import stats
+#remove null values
+daily_sales_df.dropna(inplace=True)
+#p-value test
+stats.ttest_1samp(daily_sales_df['sales_amount'], 732)
+
+
+
+
+
+
+
+
+
